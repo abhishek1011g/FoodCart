@@ -1,0 +1,13 @@
+{
+  "name": "foods_card",
+  "version": "1.0.0",
+  "description": "A dummy application to add food items into the cart.",
+  "scripts": {
+    "start": "serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "serve": "^10.0.1"
+  },
+  "author": ""
+}

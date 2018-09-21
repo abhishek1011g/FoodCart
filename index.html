@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Foods Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="header">
+            <div class="header-inner">
+                <div class="headerTitle">Foods Cart</div>
+                <div class="options">
+                    <i class="fas fa-user"></i> &nbsp; abhishekgurgaon10@gmail.com
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="categories">
+            <div class="title">Navigate</div>
+            <div class="catItem" v-scroll-to="'#menu'">
+                ALL
+            </div>
+            <div class="catItem" v-for="(category,idx) in categories" :key="idx" v-scroll-to="'#'+generateID(category)">
+                {{category}}
+            </div>
+        </div>
+
+
+        <div class="cart">
+            <div class="title">Your Cart <span class="delCart" @click="cart = []"> <i class="fas fa-trash-alt"></i></span></div>
+            <div class="item" v-for="(item,idx) in cart" :key="idx">
+                {{item.name}}
+                <span class="price">&#8377; {{item.price}}</span>
+                <span class="qty"> 
+                    <span @click="addToCart(item,'sub')">-</span>
+                <i>x{{item.count}}</i>
+                <span @click="addToCart(item,'add')">+</span>
+                </span>
+            </div>
+            <div class="item total">
+                TOTAL: <span class="price"> &#8377; {{cartTotal}}</span>
+            </div>
+            <div class="btn">
+                Checkout
+            </div>
+        </div>
+
+
+        <div class="list" id="menu">
+            <div class="category" v-for="(category,idx) in organizedMenu" :id="generateID(category.categoryName)">
+                <div class="title">{{category.categoryName}}</div>
+
+                <div :class="isAvailable(item)?'item available':'item notAvailable'" v-for="(item,idx) in category.categoryItems" :key="idx" @click="addToCart(item,'add')">
+                    <div class="item-inner">
+                        <div :class="item.vegflag == 'veg'? 'itemIcon veg': 'itemIcon noVeg' ">
+                            <span class="foodIcon"> {{item.name | firstChar}} </span> <span class="hoverIcon">+</span> </div>
+                        <div class="item-title">{{item.name}}</div>
+                        <div class="itemDetails"> {{item.description}} &nbsp;</div>
+                        <div class="itemPrice"> {{item.price}} &#8377; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="noResult" v-if="menu.length === 0">
+            Fetching...
+        </div>
+        <div class="footer">
+            Copyright &copy; 2018 | Abhishek Giri
+        </div>
+    </div>
+
+    <script src='js/vue.min.js'></script>
+    <script src='js/vue-scrollto.js'></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
